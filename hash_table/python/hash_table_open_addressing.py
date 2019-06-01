@@ -82,6 +82,7 @@ class HashTable(object):
     while self.array[h].key is not None:
       if self.array[h].key == key:
         self.array[h].key = '<dummy>'
+        n -= 1
         return
       h = (h + 1) % self.m
     else:
