@@ -34,17 +34,16 @@ bool binary_search(int target, int numbers[], int size)
 
 bool binary_search_rec(int target, int numbers[], int left, int right)
 {
-  if (left >= right)
+  if (left > right)
     return false;
 
   int mid = (left + right) / 2;
   if (numbers[mid] < target)
-    binary_search_rec(target, numbers, mid + 1, right);
+    return binary_search_rec(target, numbers, mid + 1, right);
   else if (numbers[mid] > target)
-    binary_search_rec(target, numbers, left, right - 1);
+    return binary_search_rec(target, numbers, left, mid - 1);
   else 
     return true;
 }
-
 
 #endif  // BINARY_SEARCH_H
