@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-
 #include "binary_tree.h"
 
 binary_tree_node_t *create_binary_tree(int value)
@@ -70,4 +68,47 @@ void in_order(binary_tree_node_t *node)
   in_order(node->left);
   printf("%i ", node->value);
   in_order(node->right);
+}
+
+void level_order(binary_tree_node_t *node)
+{
+  queue_t *queue = create_queue();
+  enqueue(queue, node);
+
+  while (queue->head != NULL) {
+    binary_tree_node_t *current = dequeue(queue);
+
+    if (current->left != NULL)
+      enqueue(queue, current->left);
+
+    if (current->right != NULL)
+      enqueue(queue, current->right);
+
+    printf("%i ", current->value);
+  }
+}
+
+
+int main(void)
+{
+  binary_tree_node_t *root = create_binary_tree(1);
+  binary_tree_node_t *left = NULL;
+  binary_tree_node_t *right = NULL;
+  binary_tree_node_t *left2 = NULL;
+
+  left = add_left_child(root, 2);
+  right = add_right_child(root, 3);
+
+  left2 = add_left_child(left, 4);
+  add_right_child(left, 5);
+
+  add_left_child(right, 6);
+  add_right_child(right, 7);
+
+  add_left_child(left2, 8);
+  add_right_child(left2, 9);
+
+  level_order(root);
+
+  return 0;
 }
