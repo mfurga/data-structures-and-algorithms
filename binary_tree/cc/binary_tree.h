@@ -41,9 +41,13 @@ class BinaryTree
   BinaryTree(const T &value) { root_ = new BinaryTreeNode<T>(value, nullptr); }
   BinaryTreeNode<T> *get_root() const { return root_; }
 
+  /* Depth-first search */
   void pre_order() { pre_order(root_); }
   void post_order() { post_order(root_); }
   void in_order() { in_order(root_); }
+
+  /* Breadth-first search */
+  void level_order();
 };
 
 }  // namespace mf

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "binary_tree.h"
+#include "queue_linked_list.h"
 
 namespace mf
 {
@@ -49,6 +50,27 @@ void BinaryTree<T>::in_order(BinaryTreeNode<T> *node)
   in_order(node->left_);
   std::cout << node->value_ << " ";
   in_order(node->right_);
+}
+
+template <class T>
+void BinaryTree<T>::level_order()
+{
+  Queue<BinaryTreeNode<T> *> queue;
+  BinaryTreeNode<T> *current;
+
+  queue.enqueue(root_);
+
+  while (!queue.is_empty()) {
+    current = queue.dequeue();
+
+    if (current->left_ != nullptr)
+      queue.enqueue(current->left_);
+
+    if (current->right_ != nullptr)
+      queue.enqueue(current->right_);
+
+    std::cout << current->value_ << " ";
+  }
 }
 
 }  // namespace mf
