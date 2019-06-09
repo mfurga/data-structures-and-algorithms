@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "binary_search_tree.h"
 
@@ -130,7 +131,7 @@ void delete(binary_tree_node_t *node, int value)
   }
 
   curr->value = smallest->value;
-  return delete(smallest, curr->value);
+  return delete(smallest, smallest->value);
 }
 
 int height(binary_tree_node_t *node)
@@ -167,3 +168,43 @@ int count(binary_tree_node_t *node)
   return 1 + count(node->left) + count(node->right);
 }
 
+bool is_between(binary_tree_node_t *node, int min, int max)
+{
+  if (node == NULL)
+    return true;
+
+  return (node->value > min && node->value < max &&
+          is_between(node->left, min, node->value) &&
+          is_between(node->right, node->value, max));
+}
+
+/* 
+  We can also use the in-order traversal and check each time
+  that incoming data is sorted or not.
+ */
+bool is_binary_search_tree(binary_tree_node_t *root)
+{
+  return is_between(root, INT_MIN, INT_MAX);
+}
+
+int successor(binary_tree_node_t *root, int value)
+{
+  binary_tree_node_t *node = find(root, value);
+  if (node == NULL)
+    return -1;
+
+  /* The node has a right sub-tree. */
+  if (node->right != NULL)
+    return minimum(node->right);
+
+  /* The node doesn't have a right sub-tree. */
+  binary_tree_node_t *successor = NULL;
+  while (root != node) {
+    if (root->value > node->value) {
+      successor = root;
+      root = root->left;
+    } else
+      root = root->right;
+  }
+  return successor->value;
+}

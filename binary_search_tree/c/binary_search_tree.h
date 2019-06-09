@@ -1,6 +1,8 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
+#include <stdbool.h>
+
 typedef struct binary_tree_node
 {
   int value;
@@ -26,5 +28,9 @@ int maximum(binary_tree_node_t *node);
 int minimum(binary_tree_node_t *node);
 
 int count(binary_tree_node_t *node);
+
+bool is_binary_search_tree(binary_tree_node_t *root);
+
+int successor(binary_tree_node_t *root, int value);
 
 #endif  // BINARY_SEARCH_TREE_H
