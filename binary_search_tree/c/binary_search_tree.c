@@ -136,7 +136,7 @@ void delete(binary_tree_node_t *node, int value)
 int height(binary_tree_node_t *node)
 {
   if (node == NULL)
-    return 0;
+    return -1;
   return 1 + max(height(node->left), height(node->right));
 }
 
