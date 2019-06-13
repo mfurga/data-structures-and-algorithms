@@ -20,6 +20,14 @@ binary_max_heap_t *create_binary_max_heap(void)
   return h;
 }
 
+void delete_binary_max_heap(binary_max_heap_t *h)
+{
+  if (h == NULL || h->array == NULL)
+    return;
+  free(h->array);
+  free(h);
+}
+
 static void sift_up(binary_max_heap_t *h, int index)
 {
   while (index > 1 && h->array[index] > h->array[index / 2]) {
@@ -53,7 +61,7 @@ static void sift_down(binary_max_heap_t *h, int index)
 void insert(binary_max_heap_t *h, int value)
 {
   if (h->size == h->capacity)
-    return;  /* Priority queue is full. */
+    return;  /* Heap is full. */
 
   h->array[++h->size] = value;
   sift_up(h, h->size);
@@ -62,7 +70,7 @@ void insert(binary_max_heap_t *h, int value)
 int extract_max(binary_max_heap_t *h)
 {
   if (h->size == 0)
-    return -1;  /* Priority queue is empty. */
+    return -1;  /* Heap is empty. */
 
   int res = h->array[1];
   h->array[1] = h->array[h->size--];
@@ -73,7 +81,7 @@ int extract_max(binary_max_heap_t *h)
 int get_max(binary_max_heap_t *h)
 {
   if (h->size == 0)
-    return -1;  /* Priority queue is empty. */
+    return -1;  /* Heap is empty. */
   return h->array[1];
 }
 
@@ -87,4 +95,13 @@ binary_max_heap_t *heapify(int *array, size_t len)
     sift_down(h, i);
   }
   return h;
+}
+
+void heap_sort(int *array, size_t len)
+{
+  binary_max_heap_t *h = heapify(array, len);
+  for (int i = 0; i < len; i++) {
+    array[i] = extract_max(h);
+  }
+  delete_binary_max_heap(h);
 }

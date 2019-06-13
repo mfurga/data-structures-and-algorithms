@@ -13,6 +13,8 @@ typedef struct
 
 binary_max_heap_t *create_binary_max_heap(void);
 
+void delete_binary_max_heap(binary_max_heap_t *h);
+
 static void sift_up(binary_max_heap_t *h, int index);
 
 static void sift_down(binary_max_heap_t *h, int index);
@@ -24,5 +26,7 @@ int extract_max(binary_max_heap_t *h);
 int get_max(binary_max_heap_t *h);
 
 binary_max_heap_t *heapify(int *array, size_t len);
+
+void heap_sort(int *array, size_t len);
 
 #endif  // BINARY_MAX_HEAP_H
