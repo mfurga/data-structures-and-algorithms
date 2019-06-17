@@ -1,7 +1,8 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include "merge_sort.h"
 
-#define ARRAY_SIZE(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+#define array_size(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+#define min(a, b) ((a) < (b) ? (a) : (b))
 
 static void merge(int *arr, int *copy, int lo, int mid, int hi)
 {
@@ -26,6 +27,14 @@ static void sort_(int *arr, int *copy, int lo, int hi)
   sort_(arr, copy, lo, mid);
   sort_(arr, copy, mid + 1, hi);
   merge(arr, copy, lo, mid, hi);
+}
+
+void sort_iter(int *arr, int size)
+{
+  int copy[size];
+  for (int sz = 1; sz < size; sz = sz + sz)
+    for (int lo = 0; lo < size - sz; lo += sz + sz)
+      merge(arr, copy, lo, lo + sz - 1, min(lo + sz + sz - 1, size - 1));
 }
 
 void sort(int *arr, int size)

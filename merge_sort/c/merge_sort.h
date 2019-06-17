@@ -7,4 +7,6 @@ static void sort_(int *arr, int *copy, int lo, int hi);
 
 void sort(int *arr, int size);
 
+void sort_iter(int *arr, int size);
+
 #endif  // MERGE_SORT_H
