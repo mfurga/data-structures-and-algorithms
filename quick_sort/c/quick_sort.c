@@ -23,8 +23,8 @@ static void quicksort_(int *arr, int lo, int hi)
 {
   if (hi <= lo) return;
   int j = partition(arr, lo, hi);
-  quicksort(arr, lo, j - 1);
-  quicksort(arr, j + 1, hi);
+  quicksort_(arr, lo, j - 1);
+  quicksort_(arr, j + 1, hi);
 }
 
 void quicksort(int *arr, int size)
