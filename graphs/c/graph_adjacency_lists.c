@@ -85,4 +85,34 @@ void depth_first_search(graph_t *g, int vertex)
   bool visited[g->vertices];
   memset(visited, false, sizeof(bool) * g->vertices);
   depth_first_search_(g, vertex, visited);
+  /* Visit all the vertices.
+  (void)vertex;
+  for (int v = 0; v < g->vertices && visited[v] == false; v++)
+    depth_first_search_(g, v, visited);
+  */
+}
+
+void depth_first_search_iter(graph_t *g, int vertex)
+{
+  bool visited[g->vertices];
+  memset(visited, false, sizeof(bool) * g->vertices);
+  stack_t *s = create_stack(g->vertices);
+
+  visited[vertex] = true;
+  push(s, vertex);
+
+  while (!empty_stack(s)) {
+    int v = pop(s);
+    /* Do whatever with the vertex. We'll just print its value. */
+    printf("%i ", v);
+    linked_list_node_t *current = g->lists[v]->head;
+    while (current != NULL) {
+      if (visited[current->value] == false) {
+        visited[current->value] = true;
+        push(s, current->value);
+      }
+      current = current->next;
+    }
+  }
+  remove_stack(s);
 }
