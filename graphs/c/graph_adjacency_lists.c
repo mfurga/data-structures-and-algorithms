@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #include "graph_adjacency_lists.h"
 
 graph_t *create_graph(int vertices)
@@ -40,4 +40,49 @@ void remove_edge(graph_t *g, int src, int dest)
     return;
   erase(g->lists[src], dest);
   g->edges--;
+}
+
+void breadth_first_search(graph_t *g, int vertex)
+{
+  bool visited[g->vertices];
+  memset(visited, false, sizeof(bool) * g->vertices);
+  queue_t *q = create_queue(g->vertices);
+
+  visited[vertex] = true;
+  enqueue(q, vertex);
+
+  while (!empty(q)) {
+    int v = dequeue(q);
+    /* Do whatever with the vertex. We'll just print its value. */
+    printf("%i ", v);
+    linked_list_node_t *current = g->lists[v]->head;
+    while (current != NULL) {
+      if (visited[current->value] == false) {
+        visited[current->value] = true;
+        enqueue(q, current->value);
+      }
+      current = current->next;
+    }
+  }
+  remove_queue(q);
+}
+
+static void depth_first_search_(graph_t *g, int vertex, bool visited[])
+{
+  visited[vertex] = true;
+  /* Do whatever with the vertex. We'll just print its value. */
+  printf("%i ", vertex);
+  linked_list_node_t *current = g->lists[vertex]->head;
+  while (current != NULL) {
+    if (visited[current->value] == false)
+      depth_first_search_(g, current->value, visited);
+    current = current->next;
+  }
+}
+
+void depth_first_search(graph_t *g, int vertex)
+{
+  bool visited[g->vertices];
+  memset(visited, false, sizeof(bool) * g->vertices);
+  depth_first_search_(g, vertex, visited);
 }
