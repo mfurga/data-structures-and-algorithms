@@ -116,3 +116,38 @@ void depth_first_search_iter(graph_t *g, int vertex)
   }
   remove_stack(s);
 }
+
+static bool find_path_(graph_t *g, int src, int dest, bool visited[],
+                       stack_t *s)
+{
+  visited[src] = true;
+  push(s, src);
+  if (src == dest) return true;
+
+  linked_list_node_t *current = g->lists[src]->head;
+  while (current != NULL) {
+    if (!visited[current->value] && find_path_(g, current->value, dest, visited, s))
+      return true;
+    current = current->next;
+  }
+  pop(s);
+  return false;
+}
+
+/* Finding a path between two vertices using the depth first search. */
+void find_path(graph_t *g, int src, int dest)
+{
+  if (src < 0 || dest < 0 || src >= g->vertices || dest >= g->vertices)
+    return;
+  bool visited[g->vertices];
+  memset(visited, false, sizeof(bool) * g->vertices);
+  stack_t *s = create_stack(g->vertices);
+
+  if (find_path_(g, src, dest, visited, s) == true) {
+    while (!empty_stack(s))
+      printf("%i ", pop(s));
+  } else
+    printf("The path doesn't exist.\n");
+
+  remove_stack(s);
+}
