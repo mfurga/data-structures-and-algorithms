@@ -51,7 +51,7 @@ void breadth_first_search(graph_t *g, int vertex)
   visited[vertex] = true;
   enqueue(q, vertex);
 
-  while (!empty(q)) {
+  while (!empty_queue(q)) {
     int v = dequeue(q);
     /* Do whatever with the vertex. We'll just print its value. */
     printf("%i ", v);
@@ -150,4 +150,51 @@ void find_path(graph_t *g, int src, int dest)
     printf("The path doesn't exist.\n");
 
   remove_stack(s);
+}
+
+/* Finding the shortest path between two vertices using the 
+   breadth first search. */
+void find_shortest_path(graph_t *g, int src, int dest)
+{
+  #define NOT_VISITED -2
+  #define START_POINT -1
+  if (src < 0 || dest < 0 || src >= g->vertices || dest >= g->vertices)
+    return;
+  int visited[g->vertices];
+  /* Initializate the array with a special value (-2) = not visited. */
+  for (int i = 0; i < g->vertices; i++)
+    visited[i] = NOT_VISITED;
+
+  queue_t *q = create_queue(g->vertices);
+  int v;
+
+  visited[src] = START_POINT;  /* We mark the start point as (-1). */
+  enqueue(q, src);
+
+  while (!empty_queue(q)) {
+    v = dequeue(q);
+
+    linked_list_node_t *current = g->lists[v]->head;
+    while (current != NULL) {
+      if (visited[current->value] == NOT_VISITED) {
+        visited[current->value] = v;
+        enqueue(q, current->value);
+        /* Print the shortest path and we're done. */ 
+        if (current->value == dest) {
+          v = current->value;
+          while (v > START_POINT) {
+            printf("%i ", v);
+            v = visited[v];
+          }
+          goto done;
+        }
+      }
+      current = current->next;
+    }
+  }
+
+  done:
+  remove_queue(q);
+  #undef NOT_VISITED
+  #undef START_POINT
 }

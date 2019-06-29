@@ -32,4 +32,6 @@ static bool find_path_(graph_t *g, int src, int dest, bool visited[],
 
 void find_path(graph_t *g, int src, int dest);
 
+void find_shortest_path(graph_t *g, int src, int dest);
+
 #endif  // GRAPH_ADJACENCY_LISTS_H
