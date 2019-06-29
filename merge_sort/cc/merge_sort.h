@@ -4,19 +4,14 @@
 namespace mf
 {
 
-template <class T=int>
-class Mergesort
-{
- private:
-  void merge(T arr[], T copy[], int lo, int mid, int hi);
-  void sort(T arr[], T copy[], int lo, int hi);
+template <typename T=int>
+static void merge(T arr[], T copy[], int lo, int mid, int hi);
 
- public:
-  Mergesort() {}
-  ~Mergesort() {}
+template <typename T=int>
+static void sort(T arr[], T copy[], int lo, int hi);
 
-  void sort(T arr[], int size);
-};
+template <typename T=int>
+void sort(T arr[], int size);
 
 }  // namespace mf
 

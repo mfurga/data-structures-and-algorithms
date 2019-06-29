@@ -3,8 +3,8 @@
 namespace mf
 {
 
-template <class T>
-void Mergesort<T>::merge(T arr[], T copy[], int lo, int mid, int hi)
+template <typename T=int>
+static void merge(T arr[], T copy[], int lo, int mid, int hi)
 {
   /* Arr[lo] to arr[mid] and arr[mid + 1] to arr[hi] must be sorted. */
   
@@ -20,8 +20,8 @@ void Mergesort<T>::merge(T arr[], T copy[], int lo, int mid, int hi)
   }
 }
 
-template <class T>
-void Mergesort<T>::sort(T arr[], T copy[], int lo, int hi)
+template <typename T=int>
+static void sort(T arr[], T copy[], int lo, int hi)
 {
   if (hi <= lo) return;
   int mid = lo + (hi - lo) / 2;
@@ -30,8 +30,8 @@ void Mergesort<T>::sort(T arr[], T copy[], int lo, int hi)
   merge(arr, copy, lo, mid, hi);
 }
 
-template <class T>
-void Mergesort<T>::sort(T arr[], int size)
+template <typename T=int>
+void sort(T arr[], int size)
 {
   T copy[size];
   sort(arr, copy, 0, size - 1);
