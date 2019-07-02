@@ -2,6 +2,7 @@
 #define QUEUE_FIXED_SIZE_ARRAY_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct queue
 {
