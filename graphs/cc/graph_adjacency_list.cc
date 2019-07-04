@@ -130,12 +130,11 @@ void Graph<T>::find_shortest_path(const T& src, const T& dest)
           v = visited[v];
         }
         std::cout << v << " ";
-        goto done;
+        return;
       }
     }
   }
-  done:
-  return;
+  /* The shortest path doesn't exist. */
 }
 
 }  // namespace graph
