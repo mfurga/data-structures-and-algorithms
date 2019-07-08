@@ -47,7 +47,7 @@ int pop_back(dynamic_array_t *da)
 {
   if (da->size <= 0)
     return -1;
-  return da->array[da->size-- - 1];
+  return da->array[--da->size];
 }
 
 int get(dynamic_array_t *da, int index)
