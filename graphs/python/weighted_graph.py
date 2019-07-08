@@ -56,6 +56,7 @@ class WeightedGraph(object):
     d[src] = 0
 
     while len(Q) > 0:
+      # TODO: We should use the fibonacci min-heap here for better performances.
       edge = min([Edge(q, d[q]) for q in Q], key=lambda v: v.weight)
       S.add(edge.dest)
       Q.remove(edge.dest)
