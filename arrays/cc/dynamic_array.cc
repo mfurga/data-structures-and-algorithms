@@ -30,7 +30,7 @@ std::optional<int> DynamicArray::pop_back()
   if (this->size == 0) {
     return std::nullopt;
   }
-  return this->array[this->size-- - 1];
+  return this->array[--this->size];
 }
 
 void DynamicArray::update(int index, int value)
