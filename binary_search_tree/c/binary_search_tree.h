@@ -23,11 +23,17 @@ binary_tree_node_t *find(binary_tree_node_t *node, int value);
 
 int height(binary_tree_node_t *node);
 
+int min_height(binary_tree_node_t *node);
+
+int nodes_with_one_child(binary_tree_node_t *node);
+
 int maximum(binary_tree_node_t *node);
 
 int minimum(binary_tree_node_t *node);
 
 int count(binary_tree_node_t *node);
+
+int leaf(binary_tree_node_t *node);
 
 bool is_binary_search_tree(binary_tree_node_t *root);
 

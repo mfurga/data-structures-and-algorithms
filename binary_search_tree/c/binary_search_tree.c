@@ -141,6 +141,23 @@ int height(binary_tree_node_t *node)
   return 1 + max(height(node->left), height(node->right));
 }
 
+int min_height(binary_tree_node_t *node)
+{
+  if (node == NULL)
+    return -1;
+  return 1 + min(min_height(node->left), min_height(node->right));
+}
+
+int nodes_with_one_child(binary_tree_node_t *node)
+{
+  if (node == NULL)
+    return 0;
+  if (node->left == NULL ^ node->right == NULL)
+    return 1;
+  return nodes_with_one_child(node->left) +
+         nodes_with_one_child(node->right);
+}
+
 int maximum(binary_tree_node_t *node)
 {
   if (node == NULL)
@@ -166,6 +183,15 @@ int count(binary_tree_node_t *node)
   if (node == NULL)
     return 0;
   return 1 + count(node->left) + count(node->right);
+}
+
+int leaf(binary_tree_node_t *node)
+{
+  if (node == NULL)
+    return 0;
+  if (node->left == NULL && node->left == NULL)
+    return 1;
+  return leaf(node->left) + leaf(node->right);
 }
 
 bool is_between(binary_tree_node_t *node, int min, int max)
