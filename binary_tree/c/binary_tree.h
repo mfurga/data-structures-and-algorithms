@@ -29,8 +29,6 @@ void in_order(binary_tree_node_t *node);
 /* Breadth-first search */
 void level_order(binary_tree_node_t *node);
 
-
-
 /* Implementation of queue using the linked list structure below */
 /* The queue is used to help us go through the tree by using the level order traversal */
 
@@ -47,6 +45,18 @@ typedef struct queue
 } queue_t;
 
 queue_t *create_queue(void);
+
+void remove_queue(queue_t *queue)
+{
+  queue_node_t *current = queue->head;
+  queue_node_t *next;
+  while (current != NULL) {
+    next = current->next;
+    free(current);
+    current = next;
+  }
+  free(queue);
+}
 
 void enqueue(queue_t *queue, binary_tree_node_t *item);
 

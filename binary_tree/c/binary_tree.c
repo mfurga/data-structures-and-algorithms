@@ -86,6 +86,7 @@ void level_order(binary_tree_node_t *node)
 
     printf("%i ", current->value);
   }
+  remove_queue(queue);
 }
 
 
