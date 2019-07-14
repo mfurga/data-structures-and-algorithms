@@ -32,7 +32,10 @@ class BinarySearchTree
  private:
   BinarySearchTreeNode<T> *root_;
   int height(BinarySearchTreeNode<T> *node);
+  int min_height(BinarySearchTreeNode<T> *node);
+  int nodes_with_one_child(BinarySearchTreeNode<T> *node);
   int count(BinarySearchTreeNode<T> *node);
+  int leaf(BinarySearchTreeNode<T> *node);
   void remove(BinarySearchTreeNode<T> *node, const T& value);
   bool is_between(BinarySearchTreeNode<T> *node, int min, int max);
   BinarySearchTreeNode<T> *find(BinarySearchTreeNode<T> *node, const T& value) const;
@@ -46,7 +49,10 @@ class BinarySearchTree
   BinarySearchTreeNode<T> *find(const T& value) const { return find(root_, value); };
 
   int height() { return height(root_); }
+  int min_height() { return min_height(root_); }
+  int nodes_with_one_child() { return nodes_with_one_child(root_); }
   int count() { return count(root_); }
+  int leaf() { return leaf(root_); }
 
   BinarySearchTreeNode<T> *maximum() const;
   BinarySearchTreeNode<T> *minimum() const;

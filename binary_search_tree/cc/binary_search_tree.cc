@@ -1,4 +1,5 @@
 #include <limits>
+#include <algorithm>
 #include "binary_search_tree.h"
 
 namespace mf
@@ -101,7 +102,7 @@ void BinarySearchTree<T>::remove(BinarySearchTreeNode<T> *node, const T& value)
   /* Now we're looking for the smallest value in the right sub-tree. */
   BinarySearchTreeNode<T> *smallest = curr->right_;
 
-  while (smallest->left_ != NULL) {
+  while (smallest->left_ != nullptr) {
     smallest = smallest->left_;
   }
 
@@ -115,6 +116,24 @@ int BinarySearchTree<T>::height(BinarySearchTreeNode<T> *node)
   if (node == nullptr)
     return -1;
   return 1 + std::max(height(node->left_), height(node->right_));
+}
+
+template <class T>
+int BinarySearchTree<T>::min_height(BinarySearchTreeNode<T> *node)
+{
+  if (node == nullptr)
+    return -1;
+  return 1 + std::min(min_height(node->left_), min_height(node->right_));
+}
+
+template <class T>
+int BinarySearchTree<T>::nodes_with_one_child(BinarySearchTreeNode<T> *node)
+{
+  if (node == nullptr)
+    return 0;
+  if (node->left_ == nullptr ^ node->right_ == nullptr)
+    return 1;
+  return nodes_with_one_child(node->left_) + nodes_with_one_child(node->right_);
 }
 
 template <class T>
@@ -141,6 +160,16 @@ BinarySearchTreeNode<T> *BinarySearchTree<T>::minimum() const
   while (curr->left_ != nullptr)
     curr = curr->left_;
   return curr;
+}
+
+template <class T>
+int BinarySearchTree<T>::leaf(BinarySearchTreeNode<T> *node)
+{
+  if (node == nullptr)
+    return 0;
+  if (node->left_ == nullptr && node->right_ == nullptr)
+    return 1;
+  return leaf(node->left_) + leaf(node->right_);
 }
 
 template <class T>
