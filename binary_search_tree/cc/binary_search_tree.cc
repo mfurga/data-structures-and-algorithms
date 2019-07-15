@@ -99,7 +99,7 @@ void BinarySearchTree<T>::remove(BinarySearchTreeNode<T> *node, const T& value)
   }
 
   /* The node has two children. */
-  /* Now we're looking for the smallest value in the right sub-tree. */
+  /* Now we're looking for the smallest value in the right subtree. */
   BinarySearchTreeNode<T> *smallest = curr->right_;
 
   while (smallest->left_ != nullptr) {
@@ -201,7 +201,7 @@ BinarySearchTreeNode<T> *BinarySearchTree<T>::successor(const T& value) const
   if (node == nullptr)
     return nullptr;
 
-  /* The node has a right sub-tree. */
+  /* The node has a right subtree. */
   if (node->right_ != nullptr) {
     BinarySearchTreeNode<T> *curr = node->right_;
     while (curr->left_ != nullptr)
@@ -209,18 +209,37 @@ BinarySearchTreeNode<T> *BinarySearchTree<T>::successor(const T& value) const
     return curr;
   }
 
-  /* The node doesn't have a right sub-tree. */
-  BinarySearchTreeNode<T> *successor = nullptr;
-  BinarySearchTreeNode<T> *curr = root_;
-
-  while (curr != node) {
-    if (curr->value_ > node->value_) {
-      successor = curr;
-      curr = curr->left_;
-    } else
-      curr = curr->right_;
+  /* The node doesn't have a right subtree. */
+  BinarySearchTreeNode<T> *parent = node->parent_;
+  while (parent != nullptr && node == parent->right_) {
+    node = parent;
+    parent = parent->parent_;
   }
-  return successor;
+  return parent;
+}
+
+template <class T>
+BinarySearchTreeNode<T> *BinarySearchTree<T>::predecessor(const T& value) const
+{
+  BinarySearchTreeNode<T> *node = find(value);
+  if (node == nullptr)
+    return nullptr;
+
+  /* The node has a left subtree. */
+  if (node->left_ != nullptr) {
+    BinarySearchTreeNode<T> *curr = node->left_;
+    while (curr->right_ != nullptr)
+      curr = curr->right_;
+    return curr;
+  }
+
+  /* The node doesn't have a left subtree. */
+  BinarySearchTreeNode<T> *parent = node->parent_;
+  while (parent != nullptr && node == parent->left_) {
+    node = parent;
+    parent = parent->parent_;
+  }
+  return parent;
 }
 
 }  // namespace mf

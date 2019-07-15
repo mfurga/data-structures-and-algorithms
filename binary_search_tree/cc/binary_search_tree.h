@@ -59,6 +59,7 @@ class BinarySearchTree
 
   bool is_binary_search_tree();
   BinarySearchTreeNode<T> *successor(const T& value) const;
+  BinarySearchTreeNode<T> *predecessor(const T& value) const;
 };
 
 }  // namespace mf
