@@ -86,7 +86,7 @@ class BinarySearchTree(object):
       return
 
     # The node has two children.
-    # Now we're looking for the smallest value in the right sub-tree.
+    # Now we're looking for the smallest value in the right subtree.
     smallest = curr.right
     while smallest.left is not None:
       smallest = smallest.left
@@ -106,23 +106,19 @@ class BinarySearchTree(object):
   def height(self):
     return self._height(self._root)
 
-  @property
-  def maximum(self):
-    if self._root is None:
+  def maximum(self, node):
+    if node is None:
       return
-    curr = self._root
-    while curr.right is not None:
-      curr = curr.right
-    return curr.value
+    while node.right is not None:
+      node = node.right
+    return node
 
-  @property
-  def minimum(self):
-    if self._root is None:
+  def minimum(self, node):
+    if node is None:
       return
-    curr = self._root
-    while curr.left is not None:
-      curr = curr.left
-    return curr.value
+    while node.left is not None:
+      node = node.left
+    return node
 
   def _is_binary_search_tree(self, node, min, max):
     if node is None:
@@ -142,20 +138,29 @@ class BinarySearchTree(object):
     if node is None:
       return
 
-    # The node has a right sub-tree.
+    # The node has a right subtree.
     if node.right is not None:
-      curr = node.right
-      while curr.left is not None:
-        curr = curr.left
-      return curr
+      return self.minimum(node.right)
 
-    # The node doesn't have a right sub-tree.
-    successor = None
-    curr = self._root
-    while curr is not node:
-      if curr.value > node.value:
-        successor = curr
-        curr = curr.left
-      else:
-        curr = curr.right
-    return successor
+    # The node doesn't have a right subtree.
+    parent = node.parent
+    while parent is not None and node == parent.right:
+      node = parent
+      parent = parent.parent
+    return parent
+
+  def predecessor(self, value):
+    node = self._find(self._root, value)
+    if node is None:
+      return
+
+    # The node has a left subtree.
+    if node.left is not None:
+      return self.maximum(node.left)
+
+    # The node doesn't have a left subtree.
+    parent = node.parent
+    while parent is not None and node == parent.left:
+      node = parent
+      parent = parent.parent
+    return parent
