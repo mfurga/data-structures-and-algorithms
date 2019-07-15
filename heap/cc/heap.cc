@@ -16,12 +16,12 @@ MaxHeap::~MaxHeap()
   delete[] array_;
 }
 
-void MaxHeap::sift_up(int *array, size_t size, int index)
+void MaxHeap::sift_up(int *array, int index)
 {
-  while (index > 0 && array[index] > array[index / 2]) {
+  while (index > 0 && array[index] > array[(index - 1) / 2]) {
     /* Now we need to swap the values (change their priority). */
-    std::swap(array[index], array[index / 2]);
-    index /= 2;
+    std::swap(array[index], array[(index - 1) / 2]);
+    index = (index - 1) / 2;
   }
 }
 
@@ -50,7 +50,7 @@ void MaxHeap::insert(int value)
     return;  /* Heap is full. */
 
   array_[size_++] = value;
-  sift_up(array_, size_, size_ - 1);
+  sift_up(array_, size_ - 1);
 }
 
 std::optional<int> MaxHeap::extract_max()

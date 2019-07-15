@@ -16,7 +16,7 @@ class MaxHeap
   int capacity_;
   int *array_;
 
-  static void sift_up(int *array, size_t size, int index);
+  static void sift_up(int *array, int index);
   static void sift_down(int *array, size_t size, int index);
 
  public:
