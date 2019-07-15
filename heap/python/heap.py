@@ -14,11 +14,11 @@ class MaxHeap(object):
     return cls(array, len(array))
 
   @staticmethod
-  def _sift_up(array, size, index):
-    while index > 0 and array[index] > array[index / 2]:
+  def _sift_up(array, index):
+    while index > 0 and array[index] > array[(index - 1) / 2]:
       # Now we need to swap the values (change their priority).
-      array[index], array[index / 2] = array[index / 2], array[index]
-      index /= 2
+      array[index], array[(index - 1) / 2] = array[(index - 1) / 2], array[index]
+      index = (index - 1) / 2
 
   @staticmethod
   def _sift_down(array, size, index):
@@ -48,7 +48,7 @@ class MaxHeap(object):
   def insert(self, value):
     self._array.append(value)
     self._size += 1
-    MaxHeap._sift_up(self._array, self._size, self._size - 1)
+    MaxHeap._sift_up(self._array, self._size - 1)
 
   def extract_max(self):
     if self._size == 0:
