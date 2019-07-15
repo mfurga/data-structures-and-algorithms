@@ -123,7 +123,7 @@ void delete(binary_tree_node_t *node, int value)
   }
 
   /* The node has two children. */
-  /* Now we're looking for the smallest value in the right sub-tree. */
+  /* Now we're looking for the smallest value in the right subtree. */
   binary_tree_node_t *smallest = curr->right;
 
   while (smallest->left != NULL) {
@@ -158,24 +158,24 @@ int nodes_with_one_child(binary_tree_node_t *node)
          nodes_with_one_child(node->right);
 }
 
-int maximum(binary_tree_node_t *node)
+binary_tree_node_t *maximum(binary_tree_node_t *node)
 {
   if (node == NULL)
-    return -1;
+    return NULL;
 
   while (node->right != NULL)
     node = node->right;
-  return node->value;
+  return node;
 }
 
-int minimum(binary_tree_node_t *node)
+binary_tree_node_t *minimum(binary_tree_node_t *node)
 {
   if (node == NULL)
-    return -1;
+    return NULL;
 
   while (node->left != NULL)
     node = node->left;
-  return node->value;
+  return node;
 }
 
 int count(binary_tree_node_t *node)
@@ -213,24 +213,40 @@ bool is_binary_search_tree(binary_tree_node_t *root)
   return is_between(root, INT_MIN, INT_MAX);
 }
 
-int successor(binary_tree_node_t *root, int value)
+binary_tree_node_t *successor(binary_tree_node_t *root, int value)
 {
   binary_tree_node_t *node = find(root, value);
   if (node == NULL)
-    return -1;
+    return NULL;
 
-  /* The node has a right sub-tree. */
+  /* The node has a right subtree. */
   if (node->right != NULL)
     return minimum(node->right);
 
-  /* The node doesn't have a right sub-tree. */
-  binary_tree_node_t *successor = NULL;
-  while (root != node) {
-    if (root->value > node->value) {
-      successor = root;
-      root = root->left;
-    } else
-      root = root->right;
+  /* The node doesn't have a right subtree. */
+  binary_tree_node_t *parent = node->parent;
+  while (parent != NULL && node == parent->right) {
+    node = parent;
+    parent = parent->parent;
   }
-  return successor->value;
+  return parent;
+}
+
+binary_tree_node_t *predecessor(binary_tree_node_t *root, int value)
+{
+  binary_tree_node_t *node = find(root, value);
+  if (node == NULL)
+    return NULL;
+
+  /* The node has a left subtree. */
+  if (node->left != NULL)
+    return maximum(node->left);
+
+  /* The node doesn't have a left subtree. */
+  binary_tree_node_t *parent = node->parent;
+  while (parent != NULL && node == node->left) {
+    node = parent;
+    parent = parent->parent;
+  }
+  return parent;
 }

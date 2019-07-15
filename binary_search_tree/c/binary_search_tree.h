@@ -27,9 +27,9 @@ int min_height(binary_tree_node_t *node);
 
 int nodes_with_one_child(binary_tree_node_t *node);
 
-int maximum(binary_tree_node_t *node);
+binary_tree_node_t *maximum(binary_tree_node_t *node);
 
-int minimum(binary_tree_node_t *node);
+binary_tree_node_t *minimum(binary_tree_node_t *node);
 
 int count(binary_tree_node_t *node);
 
@@ -37,6 +37,8 @@ int leaf(binary_tree_node_t *node);
 
 bool is_binary_search_tree(binary_tree_node_t *root);
 
-int successor(binary_tree_node_t *root, int value);
+binary_tree_node_t *successor(binary_tree_node_t *root, int value);
+
+binary_tree_node_t *predecessor(binary_tree_node_t *root, int value);
 
 #endif  // BINARY_SEARCH_TREE_H
