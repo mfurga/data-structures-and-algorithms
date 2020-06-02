@@ -4,7 +4,7 @@ from typing import List
 
 def selection_sort(arr: List, size: int) -> None:
   for i in range(size):
-    j, k = i, i
+    j, k = i + 1, i
 
     while j < size:
       if arr[j] > arr[k]:
