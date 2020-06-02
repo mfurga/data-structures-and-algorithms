@@ -6,13 +6,12 @@ void selection_sort(int *arr, size_t size)
   int t;
 
   for (i = 0; i < size; i++) {
-    j = k = i;
+    k = i;
 
-    while (j < size) {
+    for (j = i + 1; j < size; j++) {
       if (arr[j] > arr[k]) {
         k = j;
       }
-      j++;
     }
 
     t = arr[i];
