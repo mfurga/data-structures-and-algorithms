@@ -6,13 +6,12 @@ void selection_sort(T arr[], size_t size)
   size_t i, j, k;
 
   for (i = 0; i < size; i++) {
-    j = k = i;
+    k = i;
 
-    while (j < size) {
+    for (j = i + 1; j < size; j++) {
       if (arr[j] > arr[k]) {
         k = j;
       }
-      j++;
     }
 
     std::swap(arr[i], arr[k]);
