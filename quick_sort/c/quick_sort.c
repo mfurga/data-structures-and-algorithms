@@ -1,21 +1,22 @@
 #include <stdio.h>
-#define swap(a, b) int tmp = (a); (a) = (b); (b) = tmp;
 
 static int partition(int *arr, int lo, int hi)
 {
   /* We'll take the first element in the array as our pivot. */
   int pivot = arr[lo];
+  int tmp;
 
   int i = lo, j = hi + 1;
-  while (true) {
+  while (1) {
     while (arr[++i] < pivot) if (i == hi) break;
     while (arr[--j] > pivot); /* if (j == lo) break; */
 
     if (j <= i) break;
-    swap(arr[i], arr[j]);
+
+    tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
   }
 
-  swap(arr[lo], arr[j]);
+  tmp = arr[lo]; arr[lo] = arr[j]; arr[j] = tmp;
   return j;
 }
 
