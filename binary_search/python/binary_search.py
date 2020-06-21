@@ -1,36 +1,32 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
+from typing import List, Any
 
-def binary_search(target, numbers, size):
-  left = 0
-  right = size - 1
+def binary_search(array: List[Any], target: Any) -> bool:
+  left, right = 0, len(array) - 1
 
   while left <= right:
-    mid = (left + right) / 2
+    mid: int = (left + right) // 2
 
-    if target > numbers[mid]:
+    if target > array[mid]:
       left = mid + 1
-    elif target < numbers[mid]:
+    elif target < array[mid]:
       right = mid - 1
     else:
       return True
 
   return False
 
-
-def binary_search_rec(target, numbers, left, right):
+def binary_search_rec(array: List[Any], target: Any, left: int, right: int) -> bool:
   if left > right:
     return False
 
-  mid = (left + right) / 2
-  if target > numbers[mid]:
-    return binary_search_rec(target, numbers, mid + 1, right)
-  elif target < numbers[mid]:
-    return binary_search_rec(target, numbers, left, mid - 1)
-  else:
-    return True
+  mid: int = (left + right) // 2
 
+  if array[mid] > target:
+    return binary_search_rec(array, target, left, mid - 1)
 
-if __name__ == '__main__':
-  numbers = [1, 3, 5, 6, 7, 8, 10]
-  print binary_search_rec(9, numbers, 0, len(numbers) - 1)
+  if array[mid] < target:
+    return binary_search_rec(array, target, mid + 1, right)
+
+  return True
