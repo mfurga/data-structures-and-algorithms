@@ -1,4 +1,4 @@
-# Computer Science (CS)
+# Data Structures and Algorithms
 **Warning:** These implementations should probably not be used in *real* projects because they may contain bugs & security vulnerabilities! The code is presented for educational purposes only. You have been warned ;)
 
 Btw, feel free to send pull requests or open issues.
