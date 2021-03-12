@@ -1,65 +1,67 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
+class Heap(object):
+  def __init__(self):
+    self.t = []
 
-class MaxHeap(object):
-  """Binary max heap implemented using array."""
-  def __init__(self, array=None, size=None):
-    self._size = 0 if size is None else size
-    self._array = [] if array is None else array
+  @property
+  def n(self):
+    return len(self.t)
 
   @classmethod
-  def heapify(cls, array):
-    for i in xrange(len(array) / 2 - 1, -1, -1):
-      MaxHeap._sift_down(array, len(array), i)
-    return cls(array, len(array))
+  def build(cls, t):
+    self = cls()
+    self.t = t
+    for i in range(Heap.parent(self.n - 1), -1, -1):
+      self._heapify(i)
+    return self
 
   @staticmethod
-  def _sift_up(array, index):
-    while index > 0 and array[index] > array[(index - 1) / 2]:
-      # Now we need to swap the values (change their priority).
-      array[index], array[(index - 1) / 2] = array[(index - 1) / 2], array[index]
-      index = (index - 1) / 2
+  def left(i):
+    return 2 * i + 1
 
   @staticmethod
-  def _sift_down(array, size, index):
-    max_index = index
-
-    # Check if the left child exists and compare.
-    if (index * 2 + 1) < size and array[index * 2 + 1] > array[max_index]:
-      max_index = index * 2 + 1
-
-    # Check if the right child exists and compare.
-    if (index * 2 + 2) < size and array[index * 2 + 2] > array[max_index]:
-      max_index = index * 2 + 2
-
-    if index != max_index:
-      array[index], array[max_index] = array[max_index], array[index]
-      MaxHeap._sift_down(array, size, max_index)
+  def right(i):
+    return 2 * i + 2
 
   @staticmethod
-  def heapsort(array):
-    for i in xrange(len(array) / 2 - 1, -1, -1):
-      MaxHeap._sift_down(array, len(array), i)
+  def parent(i):
+    return (i - 1) // 2
 
-    for j in xrange(len(array) - 1, 0, -1):
-      array[0], array[j] = array[j], array[0]
-      MaxHeap._sift_down(array, j, 0)
+  def _heapify(self, i):
+    l = Heap.left(i)
+    r = Heap.right(i)
+    m = i
 
-  def insert(self, value):
-    self._array.append(value)
-    self._size += 1
-    MaxHeap._sift_up(self._array, self._size - 1)
+    if l < self.n and self.t[l] > self.t[m]:
+      m = l
+    if r < self.n and self.t[r] > self.t[m]:
+      m = r
 
-  def extract_max(self):
-    if self._size == 0:
-      return
-    res = self._array[0]
-    self._size -= 1
-    self._array[0] = self._array.pop()
-    MaxHeap._sift_down(self._array, self._size, 0)
-    return res
+    if m != i:
+      self.t[m], self.t[i] = self.t[i], self.t[m]
+      self._heapify(m)
 
   def get_max(self):
-    if self._size == 0:
+    return self.t[0]
+
+  def extract_max(self):
+    if self.n <= 0:
+      return None
+    self.t[0], self.t[self.n - 1] = self.t[self.n - 1], self.t[0]
+    max = self.t.pop()
+    self._heapify(0)
+    return max
+
+  def increase_key(self, i, key):
+    if key < self.t[i]:
       return
-    return self._array[0]
+    self.t[i] = key
+    while i > 0 and self.t[Heap.parent(i)] < self.t[i]:
+      self.t[Heap.parent(i)], self.t[i] = self.t[i], self.t[Heap.parent(i)]
+      i = Heap.parent(i)
+
+  def insert(self, elem):
+    self.t.append(float("-inf"))
+    self.increase_key(self.n - 1, elem)
+
