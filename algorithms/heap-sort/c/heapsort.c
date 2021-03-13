@@ -4,7 +4,12 @@
 #define RIGHT_CHILD(n)  (n * 2 + 2)
 #define PARENT(n)       ((n - 1) / 2)
 
-#define SWAP(a, b)      do { int _ = (a); (a) = (b); (b) = _; } while (0)
+void swap(int *a, int *b)
+{
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
 
 void heapify(int *t, int n, int i)
 {
@@ -16,7 +21,7 @@ void heapify(int *t, int n, int i)
   if (r < n && t[r] > t[m])  m = r;
 
   if (m != i) {
-    SWAP(t[i], t[m]);
+    swap(&t[i], &t[m]);
     heapify(t, n, m);
   }
 }
@@ -33,7 +38,7 @@ void heap_sort(int *t, int n)
   build_heap(t, n);
 
   for (int i = n - 1; i >= 1; i--) {
-    SWAP(t[0], t[i]);
+    swap(&t[0], &t[i]);
     heapify(t, i, 0);
   }
 }
