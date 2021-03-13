@@ -18,6 +18,6 @@ def _quicksort(a, lo, hi):
     _quicksort(a, lo, j - 1)
     _quicksort(a, j + 1, hi)
 
-def quicksort(A):
-  return _quicksort(A, 0, len(A) - 1)
+def quicksort(a):
+  return _quicksort(a, 0, len(a) - 1)
 
