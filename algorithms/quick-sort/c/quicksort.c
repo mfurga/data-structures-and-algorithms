@@ -1,36 +1,44 @@
 #include <stdio.h>
 
-static int partition(int *arr, int lo, int hi)
+void swap(int *a, int *b)
 {
-  int pivot = arr[lo];
-  int tmp;
-
-  int i = lo, j = hi + 1;
-  while (1) {
-    while (arr[++i] < pivot) if (i == hi) break;
-    while (arr[--j] > pivot); /* if (j == lo) break; */
-
-    if (j <= i) break;
-
-    tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
-  }
-
-  tmp = arr[lo]; arr[lo] = arr[j]; arr[j] = tmp;
-  return j;
+  int t = *a;
+  *a = *b;
+  *b = t;
 }
 
-static void _quicksort(int *arr, int lo, int hi)
+int partition(int *a, int l, int h)
 {
-  if (hi <= lo) {
-    return;
+  int p = a[h];
+  int i = l - 1;
+
+  for (int j = l; j < h; j++) {
+    if (a[j] < p) {
+      i += 1;
+      swap(&a[i], &a[j]);
+    }
   }
-  int j = partition(arr, lo, hi);
-  _quicksort(arr, lo, j - 1);
-  _quicksort(arr, j + 1, hi);
+
+  swap(&a[i + 1], &a[h]);
+  return i + 1;
 }
 
-void quicksort(int *arr, int size)
+void _quicksort(int *a, int l, int h)
 {
-  return _quicksort(arr, 0, size - 1);
+  if (l < h) {
+    int p = partition(a, l, h);
+    _quicksort(a, l, p - 1);
+    _quicksort(a, p + 1, h);
+  }
+}
+
+void quicksort(int *a, int n)
+{
+  return _quicksort(a, 0, n - 1);
+}
+
+int main(void)
+{
+  return 0;
 }
 
